@@ -67,12 +67,16 @@ class ViewController: UIViewController {
         navigationController?.navigationBar.layer.shadowOpacity = 0
         navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
         navigationItem.titleView = nil
+        navigationController?.hidesBarsOnTap = false
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
     
+    // Use Storyboard Segue
     @objc func seguePushButtonTap() {
         performSegue(withIdentifier: SecondSBViewController.segIdentifier, sender: nil)
     }
     
+    // Use Storyboard
     @objc func sbPushButtonTap() {
         let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc: SecondSBViewController = sb.instantiateViewController(identifier: SecondSBViewController.identifier)

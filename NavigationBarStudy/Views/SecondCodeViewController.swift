@@ -63,32 +63,32 @@ class SecondCodeViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .systemIndigo
         switch navi {
         case .color:
-            navigationController?.navigationBar.barTintColor = .lightGray
+            self.navigationController?.navigationBar.barTintColor = .systemYellow
         case .clear: // view의 backgroundColor로 보임
-            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            navigationController?.navigationBar.shadowImage = UIImage() // shadow clear
+            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            self.navigationController?.navigationBar.shadowImage = UIImage() // shadow clear
         case .colorShadow:
-            navigationController?.navigationBar.shadowImage = colorToImage(.systemIndigo)
+            self.navigationController?.navigationBar.shadowImage = colorToImage(.systemIndigo)
         case .blurShadow:
-            navigationController?.navigationBar.layer.masksToBounds = false
-            navigationController?.navigationBar.layer.shadowColor = UIColor.systemIndigo.cgColor
-            navigationController?.navigationBar.layer.shadowOpacity = 0.8
-            navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2)
-            navigationController?.navigationBar.layer.shadowRadius = 2
+            self.navigationController?.navigationBar.layer.masksToBounds = false
+            self.navigationController?.navigationBar.layer.shadowColor = UIColor.systemIndigo.cgColor
+            self.navigationController?.navigationBar.layer.shadowOpacity = 0.8
+            self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+            self.navigationController?.navigationBar.layer.shadowRadius = 2
         case .titleFont:
-            navigationItem.titleView = attributeTitleView()
+            self.navigationItem.titleView = attributeTitleView()
             let backButton: UIBarButtonItem = UIBarButtonItem()
             backButton.title = "Prev"
-            navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+            self.navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
         case .barButton:
             let leftBarButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(goBack))
-            navigationItem.leftBarButtonItem = leftBarButton
+            self.navigationItem.leftBarButtonItem = leftBarButton
             let rightBarButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(goBack))
-            navigationItem.rightBarButtonItem = rightBarButton
-            
-            enableSwipeSetting()
+            self.navigationItem.rightBarButtonItem = rightBarButton
+            self.enableSwipeSetting()
         case .scrollHide:
-            navigationController?.hidesBarsOnTap = true
+            self.navigationController?.hidesBarsOnTap = true
+            self.enableSwipeSetting()
         }
     }
     
@@ -119,15 +119,13 @@ class SecondCodeViewController: UIViewController {
     }
     
     @objc private func goBack() {
-        navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     private func enableSwipeSetting() {
-        navigationController?.interactivePopGestureRecognizer?.delegate = self
+        self.navigationController?.interactivePopGestureRecognizer?.delegate = nil
     }
 }
-
-extension SecondCodeViewController: UIGestureRecognizerDelegate { }
 
 extension SecondCodeViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -141,6 +139,7 @@ extension SecondCodeViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell: UITableViewCell = UITableViewCell()
         cell.textLabel?.text = "indexPath = \(indexPath)"
+        cell.selectionStyle = .none
         return cell
     }
 }
