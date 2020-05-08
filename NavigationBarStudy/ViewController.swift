@@ -13,6 +13,8 @@ public enum CustomNavi: String, CaseIterable {
     case clear = "Clear"
     case colorShadow = "ColorShadow"
     case blurShadow = "BlurShadow"
+    case titleFont = "TitleFont"
+    case barButton = "BarButton"
 }
 
 class ViewController: UIViewController {
@@ -57,12 +59,13 @@ class ViewController: UIViewController {
     }
     
     private func restoreNavigationBar() {
-        self.navigationController?.navigationBar.barTintColor = nil
-        self.navigationController?.navigationBar.shadowImage = nil
-        self.navigationController?.navigationBar.layer.shadowColor = nil
-        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0)
-        self.navigationController?.navigationBar.layer.shadowOpacity = 0
-        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationController?.navigationBar.barTintColor = nil
+        navigationController?.navigationBar.shadowImage = nil
+        navigationController?.navigationBar.layer.shadowColor = nil
+        navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        navigationController?.navigationBar.layer.shadowOpacity = 0
+        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
+        navigationItem.titleView = nil
     }
     
     @objc func seguePushButtonTap() {
@@ -73,7 +76,7 @@ class ViewController: UIViewController {
         let sb: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
         guard let vc: SecondSBViewController = sb.instantiateViewController(identifier: SecondSBViewController.identifier)
             as? SecondSBViewController else { print("Nil SB"); return }
-        self.navigationController?.pushViewController(vc, animated: true)
+        navigationController?.pushViewController(vc, animated: true)
     }
 }
 

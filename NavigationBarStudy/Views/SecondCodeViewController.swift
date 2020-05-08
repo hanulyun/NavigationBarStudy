@@ -28,13 +28,8 @@ class SecondCodeViewController: UIViewController {
                 
         view.backgroundColor = .white
         
-        configureTableView()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
         configureCustomNavi(navi)
+        configureTableView()
     }
     
     private func configureTableView() {
@@ -68,18 +63,30 @@ class SecondCodeViewController: UIViewController {
         self.navigationController?.navigationBar.tintColor = .systemIndigo
         switch navi {
         case .color:
-            self.navigationController?.navigationBar.barTintColor = .lightGray
+            navigationController?.navigationBar.barTintColor = .lightGray
         case .clear: // view의 backgroundColor로 보임
-            self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-            self.navigationController?.navigationBar.shadowImage = UIImage() // shadow clear
+            navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
+            navigationController?.navigationBar.shadowImage = UIImage() // shadow clear
         case .colorShadow:
-            self.navigationController?.navigationBar.shadowImage = colorToImage(.systemIndigo)
+            navigationController?.navigationBar.shadowImage = colorToImage(.systemIndigo)
         case .blurShadow:
-            self.navigationController?.navigationBar.layer.masksToBounds = false
-            self.navigationController?.navigationBar.layer.shadowColor = UIColor.systemIndigo.cgColor
-            self.navigationController?.navigationBar.layer.shadowOpacity = 0.8
-            self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2)
-            self.navigationController?.navigationBar.layer.shadowRadius = 2
+            navigationController?.navigationBar.layer.masksToBounds = false
+            navigationController?.navigationBar.layer.shadowColor = UIColor.systemIndigo.cgColor
+            navigationController?.navigationBar.layer.shadowOpacity = 0.8
+            navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 2)
+            navigationController?.navigationBar.layer.shadowRadius = 2
+        case .titleFont:
+            navigationItem.titleView = attributeTitleView()
+            let backButton: UIBarButtonItem = UIBarButtonItem()
+            backButton.title = "Prev"
+            navigationController?.navigationBar.topItem?.backBarButtonItem = backButton
+        case .barButton:
+            let leftBarButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .stop, target: self, action: #selector(goBack))
+            navigationItem.leftBarButtonItem = leftBarButton
+            let rightBarButton: UIBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(goBack))
+            navigationItem.rightBarButtonItem = rightBarButton
+            
+            enableSwipeSetting()
         }
     }
     
@@ -90,6 +97,38 @@ class SecondCodeViewController: UIViewController {
             context.fill(CGRect(origin: .zero, size: size))
         }
         return image
+    }
+    
+    private func attributeTitleView() -> UIView {
+        let label: UILabel = UILabel()
+        let lightText: NSMutableAttributedString = NSMutableAttributedString(string: "Title", attributes: [
+            .foregroundColor: UIColor.systemIndigo,
+            .font: UIFont.systemFont(ofSize: 18, weight: .light)
+        ])
+        let boldText: NSMutableAttributedString = NSMutableAttributedString(string: "Font", attributes: [
+            .foregroundColor: UIColor.systemBlue,
+            .font: UIFont.systemFont(ofSize: 20, weight: .medium)
+        ])
+        let naviTitle: NSMutableAttributedString = lightText
+        naviTitle.append(boldText)
+        
+        label.attributedText = naviTitle
+        return label
+    }
+    
+    @objc private func goBack() {
+        navigationController?.popViewController(animated: true)
+    }
+    
+    private func enableSwipeSetting() {
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
+    }
+}
+
+extension SecondCodeViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
+                           shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
     }
 }
 
