@@ -12,6 +12,7 @@ class SecondSBViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     static let identifier: String = "SecondSBViewController"
+    static let segIdentifier: String = "SecondSegue"
 
     override func viewDidLoad() {
         super.viewDidLoad()

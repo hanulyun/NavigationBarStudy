@@ -8,41 +8,65 @@
 
 import UIKit
 
+public enum CustomNavi: String, CaseIterable {
+    case color = "Color"
+    case clear = "Clear"
+    case colorShadow = "ColorShadow"
+    case blurShadow = "BlurShadow"
+}
+
 class ViewController: UIViewController {
     
-    @IBOutlet weak var codePushButton: UIButton!
-    @IBOutlet weak var seguePushButton: UIButton!
-    @IBOutlet weak var sbPushButton: UIButton!
+    private let tableView: UITableView = UITableView()
     
+    private var naviTypes: [CustomNavi] = CustomNavi.allCases.map({$0})
+        
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
                 
-        view.backgroundColor = .systemGray3
+        view.backgroundColor = .white
         
-        codePushButton.addTarget(self, action: #selector(codePushButtonTap), for: .touchUpInside)
-        seguePushButton.addTarget(self, action: #selector(seguePushButtonTap), for: .touchUpInside)
-        sbPushButton.addTarget(self, action: #selector(sbPushButtonTap), for: .touchUpInside)
+        configureTableView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-        // NavigationBar Over Push
-        self.navigationController?.navigationBar.barTintColor = .systemGray3
-        self.navigationController?.navigationBar.shadowImage = UIImage()
-        self.navigationController?.navigationBar.setBackgroundImage(UIImage(), for: .default)
-        
-        title = "Main"
+        title = "Custom Navigation"
+        restoreNavigationBar()
     }
-
-    @objc func codePushButtonTap() {
-        let vc: SecondCodeViewController = SecondCodeViewController()
-        self.navigationController?.pushViewController(vc, animated: true)
+    
+    private func configureTableView() {
+        view.addSubview(tableView)
+        
+        let guide: UILayoutGuide = view.safeAreaLayoutGuide
+        
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: guide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: guide.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: guide.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: guide.bottomAnchor)
+        ])
+        
+        tableView.backgroundColor = .white
+        tableView.separatorStyle = .singleLine
+        
+        tableView.dataSource = self
+        tableView.delegate = self
+    }
+    
+    private func restoreNavigationBar() {
+        self.navigationController?.navigationBar.barTintColor = nil
+        self.navigationController?.navigationBar.shadowImage = nil
+        self.navigationController?.navigationBar.layer.shadowColor = nil
+        self.navigationController?.navigationBar.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.navigationController?.navigationBar.layer.shadowOpacity = 0
+        self.navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
     }
     
     @objc func seguePushButtonTap() {
-        performSegue(withIdentifier: SecondSegueViewController.identifier, sender: nil)
+        performSegue(withIdentifier: SecondSBViewController.segIdentifier, sender: nil)
     }
     
     @objc func sbPushButtonTap() {
@@ -53,12 +77,31 @@ class ViewController: UIViewController {
     }
 }
 
-extension UIView {
-    func convertImage() -> UIImage {
-        let renderer: UIGraphicsImageRenderer = UIGraphicsImageRenderer(bounds: bounds)
-        let renderedImage: UIImage = renderer.image { context in
-            layer.render(in: context.cgContext)
-        }
-        return renderedImage
+extension ViewController: UITableViewDataSource {
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return naviTypes.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell: UITableViewCell = UITableViewCell()
+        let type: CustomNavi = naviTypes[indexPath.row]
+        cell.textLabel?.text = type.rawValue
+        return cell
+    }
+}
+
+extension ViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 50
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let type: CustomNavi = naviTypes[indexPath.row]
+        let vc: SecondCodeViewController = SecondCodeViewController(type)
+        self.navigationController?.pushViewController(vc, animated: true)
     }
 }

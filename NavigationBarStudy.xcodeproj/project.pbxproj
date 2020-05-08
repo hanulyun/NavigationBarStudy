@@ -15,7 +15,6 @@
 		31A3DF5B24639B6000127D74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 31A3DF5924639B6000127D74 /* LaunchScreen.storyboard */; };
 		31A3DF6324639B7700127D74 /* SecondCodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A3DF6224639B7700127D74 /* SecondCodeViewController.swift */; };
 		31A3DF6524639BCE00127D74 /* SecondSBViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A3DF6424639BCE00127D74 /* SecondSBViewController.swift */; };
-		31A3DF672463A0A300127D74 /* SecondSegueViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31A3DF662463A0A300127D74 /* SecondSegueViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -29,7 +28,6 @@
 		31A3DF5C24639B6000127D74 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		31A3DF6224639B7700127D74 /* SecondCodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondCodeViewController.swift; sourceTree = "<group>"; };
 		31A3DF6424639BCE00127D74 /* SecondSBViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSBViewController.swift; sourceTree = "<group>"; };
-		31A3DF662463A0A300127D74 /* SecondSegueViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondSegueViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -79,7 +77,6 @@
 			children = (
 				31A3DF6224639B7700127D74 /* SecondCodeViewController.swift */,
 				31A3DF6424639BCE00127D74 /* SecondSBViewController.swift */,
-				31A3DF662463A0A300127D74 /* SecondSegueViewController.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -157,7 +154,6 @@
 			files = (
 				31A3DF6524639BCE00127D74 /* SecondSBViewController.swift in Sources */,
 				31A3DF6324639B7700127D74 /* SecondCodeViewController.swift in Sources */,
-				31A3DF672463A0A300127D74 /* SecondSegueViewController.swift in Sources */,
 				31A3DF5324639B5D00127D74 /* ViewController.swift in Sources */,
 				31A3DF4F24639B5D00127D74 /* AppDelegate.swift in Sources */,
 				31A3DF5124639B5D00127D74 /* SceneDelegate.swift in Sources */,
