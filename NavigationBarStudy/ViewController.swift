@@ -15,6 +15,7 @@ public enum CustomNavi: String, CaseIterable {
     case blurShadow = "BlurShadow"
     case titleFont = "TitleFont"
     case barButton = "BarButton"
+    case scrollHide = "ScrollHide"
 }
 
 class ViewController: UIViewController {

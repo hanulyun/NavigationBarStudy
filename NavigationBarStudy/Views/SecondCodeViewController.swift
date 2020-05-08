@@ -87,6 +87,8 @@ class SecondCodeViewController: UIViewController {
             navigationItem.rightBarButtonItem = rightBarButton
             
             enableSwipeSetting()
+        case .scrollHide:
+            navigationController?.hidesBarsOnTap = true
         }
     }
     
@@ -125,12 +127,7 @@ class SecondCodeViewController: UIViewController {
     }
 }
 
-extension SecondCodeViewController: UIGestureRecognizerDelegate {
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer,
-                           shouldBeRequiredToFailBy otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
-    }
-}
+extension SecondCodeViewController: UIGestureRecognizerDelegate { }
 
 extension SecondCodeViewController: UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
@@ -151,5 +148,21 @@ extension SecondCodeViewController: UITableViewDataSource {
 extension SecondCodeViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 50
+    }
+
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if navi == .scrollHide {
+            let pan: UIPanGestureRecognizer = scrollView.panGestureRecognizer
+            let velocity: CGFloat = pan.velocity(in: scrollView).y
+            if velocity < -5 {
+                UIView.animate(withDuration: 0.3) {
+                    self.navigationController?.setNavigationBarHidden(true, animated: true)
+                }
+            } else if velocity > 5 {
+                UIView.animate(withDuration: 0.3) {
+                    self.navigationController?.setNavigationBarHidden(false, animated: true)
+                }
+            }
+        }
     }
 }
