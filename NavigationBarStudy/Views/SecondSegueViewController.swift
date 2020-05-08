@@ -14,5 +14,8 @@ class SecondSegueViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        title = "SecondView-Segue"
+        
+        view.backgroundColor = .systemGray3
     }
 }
